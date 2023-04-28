@@ -76,7 +76,7 @@ class App(customtkinter.CTk):
 
     def button_click2(self):
         self.label.configure(text="Arbol generado")
-        arbol = generar_arbol(['A', ['B', ['D'], ['E']], ['C', ['F'], ['G']]]) # Como chingados metemos cosas
+        arbol = generar_arbol(['A', ['B', ['X'], ['W']], ['C', ['F'], ['G']]]) # Como chingados metemos cosas
         DotExporter(arbol).to_dotfile("arbol.dot")
         comando = "dot -Tpng arbol.dot -o arbol.png"
         subprocess.run(comando, shell=True, capture_output=True, text=True)
