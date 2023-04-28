@@ -45,22 +45,21 @@ def generar_arbol(lista):
 
 class App(customtkinter.CTk):
     def __init__(self):
-        # No le muevas si no le sabes
+# ------------------------------------------------------------------------------------------------------
+# No le muevas si no le sabes
+# ------------------------------------------------------------------------------------------------------
         super().__init__()
         self.geometry("220x240")
         self.title("ADR")
-
         self.mainInput = customtkinter.CTkEntry(self, placeholder_text="Ingrese la cadena")
         self.mainInput.grid(row=0, column=2, padx=40, pady=25)
-
         self.button = customtkinter.CTkButton(self, command=self.button_click1, text="Checar cadena")
         self.button.grid(row=1, column=2, padx=40, pady=10)
-
         self.button2 = customtkinter.CTkButton(self, command=self.button_click2, text="Generar arbol")
         self.button2.grid(row=3, column=2, padx=40, pady=10)
-
         self.label = customtkinter.CTkLabel(self, text="")
         self.label.grid(row=4, column=2, padx=40, pady=10)
+# ------------------------------------------------------------------------------------------------------
 
     def button_click1(self):
         cadena = self.mainInput.get()
