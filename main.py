@@ -60,7 +60,7 @@ class App(customtkinter.CTk):
     def button_click(self):
         cadena = self.mainInput.get()
         print(analizar(cadena))
-        arbol = generar_arbol(['A', ['B', ['D'], ['E']], ['C', ['F'], ['G']]])
+        arbol = generar_arbol(['A', ['B', ['D'], ['E']], ['C', ['F'], ['G']]]) # Como chingados metemos cosas
         DotExporter(arbol).to_dotfile("arbol.dot")
         comando = "dot -Tpng arbol.dot -o arbol.png"
         resultado = subprocess.run(comando, shell=True, capture_output=True, text=True)
