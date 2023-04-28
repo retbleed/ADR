@@ -5,35 +5,41 @@ import subprocess
 
 customtkinter.set_appearance_mode("System")
 
+grammar = {'S': ['E'], 'E': ['T + E', 'T'], 'T': ['int', '( E )']}
+
+def parse(input_string):
+    tokens = input_string.split()  
+    lookahead = tokens.pop(0)      
+    parse_S()                      
+    if lookahead != '$':
+        raise SyntaxError('Unexpected token: {}'.format(lookahead))
+    
+def parse_S():
+    parse_E()
+
+def parse_E():
+    parse_T()
+    if lookahead == '+':
+        match('+')
+        parse_E()
+
+def parse_T():
+    if lookahead == 'int':
+        match('int')
+    elif lookahead == '(':
+        match('(')
+        parse_E()
+        match(')')
+
+def match(expected):
+    global lookahead
+    if lookahead == expected:
+        lookahead = expected.pop(0)
+    else:
+        raise SyntaxError('Unexpected token: {}'.format(lookahead))
+
 def analizar(cadena):
-    global pos
-    pos = 0
-    if A(cadena):
-        if pos == len(cadena):
-            return True
-    return False
-
-def A(cadena):
-    global pos
-    if cadena[pos] == 'a':
-        pos += 1
-        if B(cadena) and C(cadena):
-            return True
-    return False
-
-def B(cadena):
-    global pos
-    if cadena[pos] == 'b':
-        pos += 1
-        return True
-    return False
-
-def C(cadena):
-    global pos
-    if cadena[pos] == 'c':
-        pos += 1
-        return True
-    return False
+    return 1
 
 def generar_arbol(lista):
     nodo_raiz = Node(lista[0])
@@ -62,14 +68,14 @@ class App(customtkinter.CTk):
 # ------------------------------------------------------------------------------------------------------
 
     def button_click1(self):
-        cadena = self.mainInput.get()
+        cadena = self.mainInput.get().lower()
         if cadena == "" :
             self.label.configure(text="Ingresa una cadena")
             return
         else:
-            if analizar(cadena.lower()) == 1 :
+            if analizar(cadena) == 1 :
                 texto = "La cadena es aceptada."
-            elif analizar(cadena.lower()) == 0:
+            elif analizar(cadena) == 0:
                 texto = "La cadena no es aceptada."
             self.label.configure(text = texto)
 
@@ -78,7 +84,9 @@ class App(customtkinter.CTk):
         arbol = generar_arbol(['A', ['B', ['X'], ['W']], ['C', ['F'], ['G']]]) # Como chingados metemos cosas
         DotExporter(arbol).to_dotfile("arbol.dot")
         comando = "dot -Tpng arbol.dot -o arbol.png"
-        subprocess.run(comando, shell=True, capture_output=True, text=True)
+        comando2 = "rm arbol.png"
+        subprocess.run(comando2, shell=True, capture_output=True, text=True)
+        subprocess.run(comando)
 
 app = App()
 app.mainloop()
