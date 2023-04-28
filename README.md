@@ -9,7 +9,6 @@ Recuerda colocar la opcion de PATH en ambas instalaciones
 
 ### Instalar con Pip
 ```
-pip install tkinter
 pip3 install customtkinter
 pip install anytree
 pip install graphviz
